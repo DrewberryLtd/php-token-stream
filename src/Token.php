@@ -111,7 +111,7 @@ abstract class PHP_TokenWithScope extends PHP_Token
 
             if ($line == $currentLineNumber ||
                 ($line == $prevLineNumber &&
-                 $tokens[$i] instanceof PHP_Token_WHITESPACE)) {
+                    $tokens[$i] instanceof PHP_Token_WHITESPACE)) {
                 continue;
             }
 
@@ -144,7 +144,7 @@ abstract class PHP_TokenWithScope extends PHP_Token
                     $this->endTokenId = $i;
                 }
             } elseif (($this instanceof PHP_Token_FUNCTION ||
-                $this instanceof PHP_Token_NAMESPACE) &&
+                    $this instanceof PHP_Token_NAMESPACE) &&
                 $tokens[$i] instanceof PHP_Token_SEMICOLON) {
                 if ($block === 0) {
                     $this->endTokenId = $i;
@@ -181,17 +181,17 @@ abstract class PHP_TokenWithScopeAndVisibility extends PHP_TokenWithScope
 
         for ($i = $this->id - 2; $i > $this->id - 7; $i -= 2) {
             if (isset($tokens[$i]) &&
-               ($tokens[$i] instanceof PHP_Token_PRIVATE ||
-                $tokens[$i] instanceof PHP_Token_PROTECTED ||
-                $tokens[$i] instanceof PHP_Token_PUBLIC)) {
+                ($tokens[$i] instanceof PHP_Token_PRIVATE ||
+                    $tokens[$i] instanceof PHP_Token_PROTECTED ||
+                    $tokens[$i] instanceof PHP_Token_PUBLIC)) {
                 return strtolower(
                     str_replace('PHP_Token_', '', get_class($tokens[$i]))
                 );
             }
             if (isset($tokens[$i]) &&
-              !($tokens[$i] instanceof PHP_Token_STATIC ||
-                $tokens[$i] instanceof PHP_Token_FINAL ||
-                $tokens[$i] instanceof PHP_Token_ABSTRACT)) {
+                !($tokens[$i] instanceof PHP_Token_STATIC ||
+                    $tokens[$i] instanceof PHP_Token_FINAL ||
+                    $tokens[$i] instanceof PHP_Token_ABSTRACT)) {
                 // no keywords; stop visibility search
                 break;
             }
@@ -208,16 +208,16 @@ abstract class PHP_TokenWithScopeAndVisibility extends PHP_TokenWithScope
 
         for ($i = $this->id - 2; $i > $this->id - 7; $i -= 2) {
             if (isset($tokens[$i]) &&
-               ($tokens[$i] instanceof PHP_Token_PRIVATE ||
-                $tokens[$i] instanceof PHP_Token_PROTECTED ||
-                $tokens[$i] instanceof PHP_Token_PUBLIC)) {
+                ($tokens[$i] instanceof PHP_Token_PRIVATE ||
+                    $tokens[$i] instanceof PHP_Token_PROTECTED ||
+                    $tokens[$i] instanceof PHP_Token_PUBLIC)) {
                 continue;
             }
 
             if (isset($tokens[$i]) &&
-               ($tokens[$i] instanceof PHP_Token_STATIC ||
-                $tokens[$i] instanceof PHP_Token_FINAL ||
-                $tokens[$i] instanceof PHP_Token_ABSTRACT)) {
+                ($tokens[$i] instanceof PHP_Token_STATIC ||
+                    $tokens[$i] instanceof PHP_Token_FINAL ||
+                    $tokens[$i] instanceof PHP_Token_ABSTRACT)) {
                 $keywords[] = strtolower(
                     str_replace('PHP_Token_', '', get_class($tokens[$i]))
                 );
@@ -445,8 +445,8 @@ class PHP_Token_FUNCTION extends PHP_TokenWithScopeAndVisibility
         $tokens = $this->tokenStream->tokens();
 
         while (isset($tokens[$i]) &&
-               !$tokens[$i] instanceof PHP_Token_OPEN_CURLY &&
-               !$tokens[$i] instanceof PHP_Token_SEMICOLON) {
+            !$tokens[$i] instanceof PHP_Token_OPEN_CURLY &&
+            !$tokens[$i] instanceof PHP_Token_SEMICOLON) {
             $this->signature .= $tokens[$i++];
         }
 
@@ -567,7 +567,7 @@ class PHP_Token_INTERFACE extends PHP_TokenWithScopeAndVisibility
         $className = (string) $tokens[$i];
 
         while (isset($tokens[$i + 1]) &&
-               !$tokens[$i + 1] instanceof PHP_Token_WHITESPACE) {
+            !$tokens[$i + 1] instanceof PHP_Token_WHITESPACE) {
             $className .= (string) $tokens[++$i];
         }
 
@@ -581,7 +581,7 @@ class PHP_Token_INTERFACE extends PHP_TokenWithScopeAndVisibility
     {
         return (isset($this->tokenStream[$this->id + 4]) &&
                 $this->tokenStream[$this->id + 4] instanceof PHP_Token_IMPLEMENTS) ||
-               (isset($this->tokenStream[$this->id + 8]) &&
+            (isset($this->tokenStream[$this->id + 8]) &&
                 $this->tokenStream[$this->id + 8] instanceof PHP_Token_IMPLEMENTS);
     }
 
@@ -1456,5 +1456,13 @@ class PHP_Token_XHP_TAG_LT extends PHP_Token
 }
 
 class PHP_Token_XHP_TEXT extends PHP_Token
+{
+}
+
+class PHP_Token_COALESCE_EQUAL extends PHP_Token
+{
+}
+
+class PHP_Token_FN extends PHP_Token
 {
 }
